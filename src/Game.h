@@ -19,6 +19,11 @@ class Game
 		void processInput();
 		void Render();
 		void Destroy();
+
+		//window stuff
+		bool fullscreen;
+		size_t windowWidth;
+		size_t windowHeight;
 };
 
 #endif

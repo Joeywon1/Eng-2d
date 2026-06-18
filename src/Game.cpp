@@ -26,12 +26,25 @@ void Game::Initialize()
 	}
 
     //Create the Window struct and display it___________________________________
+    fullscreen = false;
+    SDL_DisplayMode displayMode;
+    SDL_GetCurrentDisplayMode(0, &displayMode);
+
+    //fullscreen
+    //windowWidth = displayMode.w;
+    //windowHeight = displayMode.h;
+
+    //default
+    windowWidth = 800;
+    windowHeight = 600;
+
+
     window = SDL_CreateWindow(
                                           "J_Engine",
                                           SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED,
-                                          800,
-                                          900,
+                                          windowWidth,
+                                          windowHeight,
                                           SDL_WINDOW_RESIZABLE
                                           );
     if (!window)
@@ -70,8 +83,15 @@ void Game::processInput()
             isRunning = false;
             break;
         case SDL_KEYDOWN:
-            if(addEvent.key.keysym.sym == SDLK_ESCAPE){
+            if(addEvent.key.keysym.sym == SDLK_ESCAPE){ //exit game
                 isRunning = false;
+            }
+            else if(addEvent.key.keysym.sym == SDLK_f){
+                std::cout << "Fullscreen on." << std::endl;
+                fullscreen = !fullscreen;
+                if(fullscreen){SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);}
+                else {SDL_SetWindowFullscreen(window, 0);}
+
             }
         }
 	}
@@ -86,7 +106,7 @@ void Game::Update()
 void Game::Render()
 {
 	//Draw on screen
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(renderer, 150, 175, 250, 255);
 	SDL_RenderClear(renderer);
 
 	//render all game obj
