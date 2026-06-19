@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 
+
 class Game
 {
 	private:
@@ -18,6 +19,7 @@ class Game
 		void Update();
 		void processInput();
 		void Render();
+		void Setup();
 		void Destroy();
 
 		//window stuff

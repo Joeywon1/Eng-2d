@@ -30,7 +30,7 @@ void Game::Initialize()
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
 
-    //fullscreen
+    //fake fullscreen
     //windowWidth = displayMode.w;
     //windowHeight = displayMode.h;
 
@@ -89,7 +89,7 @@ void Game::processInput()
             else if(addEvent.key.keysym.sym == SDLK_f){
                 std::cout << "Fullscreen on." << std::endl;
                 fullscreen = !fullscreen;
-                if(fullscreen){SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);}
+                if(fullscreen){SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);}
                 else {SDL_SetWindowFullscreen(window, 0);}
 
             }
@@ -103,14 +103,32 @@ void Game::Update()
 }
 
 
+void Game::Setup(){
+    //init all objects
+
+
+}
+
 void Game::Render()
 {
-	//Draw on screen
+    Setup();
+
+	//Draw on screen blue color
 	SDL_SetRenderDrawColor(renderer, 150, 175, 250, 255);
 	SDL_RenderClear(renderer);
 
-	//render all game obj
+    //Draw PNG Texture
+    // load pngs on to the surface and transfer to tex, then to renderer on rect
+    SDL_Surface* surface = IMG_Load("./assets/images/tank-tiger-up.png");
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_FreeSurface(surface);
 
+    SDL_Rect dstRect = {10, 10, 32, 32}; // Destination rect
+    SDL_RenderCopy(renderer, texture, NULL, &dstRect);
+
+    SDL_DestroyTexture(texture);
+
+    //present back buffer
 	SDL_RenderPresent(renderer);
 }
 
